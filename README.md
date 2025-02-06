@@ -22,6 +22,14 @@ pnpm add prisma-query-decorator
 yarn add prisma-query-decorator
 ```
 
+## **📁 Peer Dependencies**
+
+Ensure you have the following peer dependencies installed:
+
+- `@nestjs/common`
+- `@nestjs/core`
+- `@prisma/client`
+
 ---
 
 ## **🛠️ Configuration**
@@ -29,6 +37,8 @@ yarn add prisma-query-decorator
 You can configure the query service globally in your `main.ts` file before starting your NestJS application.
 
 ### **Example Configuration**
+
+`main.ts`
 
 ```ts
 import { NestFactory } from '@nestjs/core';

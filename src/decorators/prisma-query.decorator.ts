@@ -28,29 +28,36 @@ export const PrismaQuery = <TDto extends object>(config: {
     const request = ctx.switchToHttp().getRequest();
     const query = request.query as Record<string, string>;
 
+    // Fetch global config
     const globalConfig = PrismaQueryService.getConfig();
 
-    const {
-      fieldTypeMap,
-      dto,
-      sensitiveFields = globalConfig.sensitiveFields,
-      excludeKeys = globalConfig.excludeKeys,
-      forbiddenKeys = globalConfig.forbiddenKeys,
-    } = config;
+    // Merge decorator config with global config
+    const fieldTypeMap = config.fieldTypeMap;
+    const dto = config.dto;
+    const sensitiveFields = [
+      ...(globalConfig.sensitiveFields || []),
+      ...(config.sensitiveFields || []),
+    ];
+    const excludeKeys = [
+      ...(globalConfig.excludeKeys || []),
+      ...(config.excludeKeys || []),
+    ];
+    const forbiddenKeys = [
+      ...(globalConfig.forbiddenKeys || []),
+      ...(config.forbiddenKeys || []),
+    ];
 
-    if (forbiddenKeys.some((key) => key in query)) {
+    // Check for forbidden keys
+    const foundForbiddenKeys = forbiddenKeys.filter((key) => key in query);
+    if (foundForbiddenKeys.length > 0) {
       throw new BadRequestException(
-        `Forbidden keys found in query: ${forbiddenKeys
-          .filter((key) => key in query)
-          .join(', ')}`,
+        `Forbidden keys found in query: ${foundForbiddenKeys.join(', ')}`,
       );
     }
 
     // Remove excluded keys
-    Object.keys(query).forEach((key) => {
-      if (excludeKeys.includes(key)) {
-        delete query[key];
-      }
+    excludeKeys.forEach((key) => {
+      delete query[key];
     });
 
     // Validate DTO structure
@@ -99,11 +106,13 @@ export const PrismaQuery = <TDto extends object>(config: {
     }
 
     // Add global request fields (e.g., userId, accountId) to `where` clause
-    globalConfig.requestFields.forEach((field) => {
-      if (request[field]) {
-        prismaArgs.where = { ...prismaArgs.where, [field]: request[field] };
-      }
-    });
+    if (globalConfig.requestFields) {
+      globalConfig.requestFields.forEach((field) => {
+        if (request[field]) {
+          prismaArgs.where = { ...prismaArgs.where, [field]: request[field] };
+        }
+      });
+    }
 
     return prismaArgs;
   })();
