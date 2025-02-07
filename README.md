@@ -9,6 +9,7 @@ This library provides a powerful and configurable **PrismaQuery** decorator for 
 ✅ **Supports filtering, ordering, and relations**  
 ✅ **Validation using DTOs**
 ✅ **Paginator for findMany requests**
+✅ **Generate OpenApi (Swagger) docs**
 
 ---
 
@@ -36,6 +37,9 @@ Ensure you have the following peer dependencies installed:
 
 You can configure the query service globally in your `main.ts` file before starting your NestJS application.
 
+Additionally you can import the `usePrismaQueryExceptionFilter` to enhance the exception logging.
+You can use the the exception filter besides the PrismaClientExceptionFilter from `nestjs-prisma`.
+
 ### **Example Configuration**
 
 `main.ts`
@@ -43,7 +47,11 @@ You can configure the query service globally in your `main.ts` file before start
 ```ts
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { PrismaQueryService } from 'prisma-query-decorator';
+import {
+  PrismaQueryService,
+  usePrismaQueryExceptionFilter,
+} from '@stickelinnovation/nestjs-prisma-query';
+// import { PrismaClientExceptionFilter } from 'nestjs-prisma';
 
 async function bootstrap() {
   PrismaQueryService.configure({
@@ -54,6 +62,10 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule);
   await app.listen(3000);
+
+  // app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter));
+
+  usePrismaQueryExceptionFilter(app); // Prisma Query Exception Filter
 }
 
 bootstrap();
@@ -69,7 +81,7 @@ Use the `PrismaQuery` decorator in your controller to parse Prisma queries dynam
 
 ```ts
 import { Controller, Get } from '@nestjs/common';
-import { PrismaQuery } from 'prisma-query-decorator';
+import { PrismaQuery } from '@stickelinnovation/nestjs-prisma-query';
 import { MyDto } from './dto/my.dto';
 import { MyService } from './my.service';
 
@@ -187,6 +199,13 @@ where: {
 ### **DTO / Entity for Validation**
 
 ```ts
+import { Prisma } from '@prisma/client';
+import {
+  applySwaggerProperties,
+  PrismaQueryDto,
+} from '@stickelinnovation/nestjs-prisma-query';
+import { favoriteFieldTypeMap } from 'src/favorites/entities/favorite.entity';
+
 export class LikeQueryDto extends PrismaQueryDto<Prisma.LikeFindManyArgs> {
   constructor() {
     super();
@@ -201,6 +220,8 @@ LikeQueryDto.applySwaggerProperties();
 ```
 
 ```ts
+import { generateFieldTypeMap } from '@stickelinnovation/nestjs-prisma-query';
+
 export class LikeEntity {
   id: number;
   createdAt: Date;
@@ -221,6 +242,8 @@ export const likeFieldTypeMap = generateFieldTypeMap(LikeEntity);
 ### **Controller**
 
 ```ts
+import { PrismaQuery } from '@stickelinnovation/nestjs-prisma-query';
+
 export class LikesController {
   constructor(private readonly likesService: LikesService) {}
 
@@ -238,9 +261,9 @@ export class LikesController {
     @PrismaQuery({
       fieldTypeMap: likeFieldTypeMap,
       dto: LikeQueryDto,
-      forbiddenKeys: [],
-      sensitiveFields: ['userId'],
-      excludeKeys: ['revalidate'],
+      forbiddenKeys: [], //optional
+      sensitiveFields: ['userId'], //optional
+      excludeKeys: ['revalidate'], //optional
     })
     query: Prisma.LikeFindManyArgs,
     @Query('revalidate', new DefaultValuePipe(true), ParseBoolPipe)
@@ -254,6 +277,8 @@ export class LikesController {
 ### **Service**
 
 ```ts
+import { paginate } from '@stickelinnovation/nestjs-prisma-query';
+
 async findAllVideoLikes(
     query: Prisma.LikeFindManyArgs,
   ) {
