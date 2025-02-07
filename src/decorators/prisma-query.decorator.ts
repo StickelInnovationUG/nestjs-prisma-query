@@ -117,3 +117,5 @@ export const PrismaQuery = <TDto extends object>(config: {
     return prismaArgs;
   })();
 };
+
+export default PrismaQuery;

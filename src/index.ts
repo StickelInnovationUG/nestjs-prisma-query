@@ -32,7 +32,6 @@ export * from './dtos/prisma-query.dto';
 
 export default PrismaQueryService;
 
-export { PrismaQuery } from './decorators/prisma-query.decorator';
 export {
   PrismaQueryExceptionFilter,
   usePrismaQueryExceptionFilter,
