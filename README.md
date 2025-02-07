@@ -90,7 +90,7 @@ export class ItemController {
   constructor(private readonly myService: MyService) {}
 
   @Get()
-  async getendpoint(@PrismaQuery({ dto: MyDto, fieldTypeMap: {} }) prismaArgs) {
+  async getEndpoint(@PrismaQuery({ dto: MyDto, fieldTypeMap: {} }) prismaArgs) {
     return this.myService.findMany(prismaArgs);
   }
 }
