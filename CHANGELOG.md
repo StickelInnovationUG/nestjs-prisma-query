@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/StickelInnovationUG/nestjs-prisma-query/compare/v1.0.3...v1.0.4) (2025-02-10)
+
+
+### Bug Fixes
+
+* publish scripts ([#8](https://github.com/StickelInnovationUG/nestjs-prisma-query/issues/8)) ([8b27ccb](https://github.com/StickelInnovationUG/nestjs-prisma-query/commit/8b27ccb9606d14ccafd99b90bd8d58e8a1dc2167))
+
 ## [1.0.3](https://github.com/StickelInnovationUG/nestjs-prisma-query/compare/v1.0.2...v1.0.3) (2025-02-10)
 
 
