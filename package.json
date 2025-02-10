@@ -1,0 +1,105 @@
+{
+  "name": "@stickelinnovation/nestjs-prisma-query",
+  "version": "1.0.0",
+  "description": "A Nest.js decorator for Prisma query parsing.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "scripts": {
+    "lint": "eslint --fix .",
+    "lint:fix": "pnpm eslint . --ext .ts,.tsx,.js,.jsx --fix",
+    "build": "rimraf dist && tsc -p tsconfig.build.json",
+    "test": "jest",
+    "prepublishOnly": "pnpm run build",
+    "prepare": "husky",
+    "publish": "npm publish --access public",
+    "release": "semantic-release"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "nestjs",
+    "prisma",
+    "query",
+    "decorator",
+    "orm",
+    "swagger",
+    "openapi",
+    "pagination",
+    "filtering",
+    "sorting",
+    "relations",
+    "validation",
+    "dto"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/StickelInnovationUG/nestjs-prisma-query.git"
+  },
+  "author": "Stickel Innovation UG",
+  "homepage": "https://github.com/StickelInnovationUG/nestjs-prisma-query#readme",
+  "license": "MIT",
+  "dependencies": {
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "^8.0.0 || ^9.0.0 || ^10.0.0",
+    "@nestjs/core": "^8.0.0 || ^9.0.0 || ^10.0.0",
+    "@nestjs/swagger": "^8.0.0 || ^9.0.0 || ^10.0.0",
+    "@prisma/client": "^4.0.0 || ^5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@nestjs/common": {
+      "optional": false
+    },
+    "@nestjs/core": {
+      "optional": false
+    },
+    "@nestjs/swagger": {
+      "optional": true
+    },
+    "@prisma/client": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^19.7.1",
+    "@eslint/compat": "^1.2.6",
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.20.0",
+    "@nestjs/common": "^11.0.8",
+    "@nestjs/core": "^11.0.8",
+    "@nestjs/swagger": "^11.0.3",
+    "@prisma/client": "^6.3.1",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/npm": "^12.0.1",
+    "@typescript-eslint/eslint-plugin": "^8.23.0",
+    "@typescript-eslint/parser": "^8.23.0",
+    "commitlint": "^19.7.1",
+    "eslint": "^9.20.0",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jest": "^28.11.0",
+    "eslint-plugin-prettier": "^5.2.3",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "eslint-plugin-unused-imports": "^4.1.4",
+    "globals": "^15.14.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
+    "prettier": "^3.4.2",
+    "rimraf": "^6.0.1",
+    "semantic-release": "^24.2.1",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.7.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
