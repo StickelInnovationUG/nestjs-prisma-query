@@ -1,4 +1,4 @@
-export type FieldType = "number" | "string" | "date" | NestedFieldTypeMap;
+export type FieldType = 'number' | 'string' | 'date' | NestedFieldTypeMap;
 
 export type NestedFieldTypeMap = {
   [key: string]: FieldType | NestedFieldTypeMap;

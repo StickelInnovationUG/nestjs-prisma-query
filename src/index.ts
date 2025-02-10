@@ -22,13 +22,13 @@ export class PrismaQueryService {
 }
 
 export * from './decorators/prisma-query.decorator';
+export * from './dtos/prisma-query.dto';
 export * from './types/query.type';
+export * from './utils/exception-filter';
+export * from './utils/operators';
+export * from './utils/paginate';
 export * from './utils/parsers';
 export * from './utils/swagger-properties';
-export * from './utils/paginate';
-export * from './utils/operators';
-export * from './utils/exception-filter';
-export * from './dtos/prisma-query.dto';
 
 export default PrismaQueryService;
 

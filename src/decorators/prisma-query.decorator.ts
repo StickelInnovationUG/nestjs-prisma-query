@@ -1,21 +1,22 @@
 import {
+  BadRequestException,
   createParamDecorator,
   ExecutionContext,
-  BadRequestException,
 } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { validateOrReject } from 'class-validator';
-import {
-  parseInclude,
-  parseOrderBy,
-  parseFilterString,
-  parseLogicalOperators,
-} from '../utils/parsers';
+
+import { PrismaQueryService } from '../index';
 import type {
   NestedFieldTypeMap,
   ParsedPrismaQuery,
 } from '../types/query.type';
-import { PrismaQueryService } from '../index';
+import {
+  parseFilterString,
+  parseInclude,
+  parseLogicalOperators,
+  parseOrderBy,
+} from '../utils/parsers';
 
 export const PrismaQuery = <TDto extends object>(config: {
   fieldTypeMap: NestedFieldTypeMap;
