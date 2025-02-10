@@ -14,7 +14,6 @@
     "test": "jest",
     "prepublishOnly": "pnpm run build",
     "prepare": "husky",
-    "publish": "npm publish --access public",
     "release": "semantic-release"
   },
   "files": [
