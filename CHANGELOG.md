@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/StickelInnovationUG/nestjs-prisma-query/compare/v1.0.4...v1.1.0) (2025-02-10)
+
+
+### Features
+
+* add prisma query dto ([#9](https://github.com/StickelInnovationUG/nestjs-prisma-query/issues/9)) ([6cb44d2](https://github.com/StickelInnovationUG/nestjs-prisma-query/commit/6cb44d2bbb5dfdfb2539108ca9f8eb182f769a66))
+
 ## [1.0.4](https://github.com/StickelInnovationUG/nestjs-prisma-query/compare/v1.0.3...v1.0.4) (2025-02-10)
 
 
