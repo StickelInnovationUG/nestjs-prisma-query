@@ -22,6 +22,7 @@ export class PrismaQueryService {
 }
 
 export * from './decorators/prisma-query.decorator';
+export * from './dtos/paginated-result.dto';
 export * from './dtos/prisma-query.dto';
 export * from './types/query.type';
 export * from './utils/exception-filter';
