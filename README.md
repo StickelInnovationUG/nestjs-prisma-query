@@ -242,7 +242,10 @@ export const likeFieldTypeMap = generateFieldTypeMap(LikeEntity);
 ### **Controller**
 
 ```ts
-import { PrismaQuery } from '@stickelinnovation/nestjs-prisma-query';
+import {
+  PrismaQuery,
+  PaginationResultDto,
+} from '@stickelinnovation/nestjs-prisma-query';
 
 export class LikesController {
   constructor(private readonly likesService: LikesService) {}
