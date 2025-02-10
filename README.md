@@ -16,11 +16,11 @@ This library provides a powerful and configurable **PrismaQuery** decorator for 
 ## **🚀 Installation**
 
 ```sh
-npm install prisma-query-decorator
+npm install @stickelinnovation/nestjs-prisma-query
 # or
-pnpm add prisma-query-decorator
+pnpm add @stickelinnovation/nestjs-prisma-query
 # or
-yarn add prisma-query-decorator
+yarn add @stickelinnovation/nestjs-prisma-query
 ```
 
 ## **📁 Peer Dependencies**
