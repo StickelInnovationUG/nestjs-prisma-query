@@ -4,11 +4,11 @@ This library provides a powerful and configurable **PrismaQuery** decorator for 
 
 ## **📌 Features**
 
-✅ **Configurable global settings** (`sensitiveFields`, `excludeKeys`, `forbiddenKeys`, `requestFields`)
-✅ **Automatically includes request-based fields (e.g., `userId`, `accountId`)**
-✅ **Supports filtering, ordering, and relations**
-✅ **Validation using DTOs**
-✅ **Paginator for findMany requests**
+✅ **Configurable global settings** (`sensitiveFields`, `excludeKeys`, `forbiddenKeys`, `requestFields`)  
+✅ **Automatically includes request-based fields (e.g., `userId`, `accountId`)**  
+✅ **Supports filtering, ordering, and relations**  
+✅ **Validation using DTOs**  
+✅ **Paginator for findMany requests**  
 ✅ **Generate OpenApi (Swagger) docs**
 
 ---
