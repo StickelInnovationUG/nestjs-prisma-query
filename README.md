@@ -1,6 +1,6 @@
 # **Prisma Query Decorator for NestJS**
 
-This library provides a powerful and configurable **PrismaQuery** decorator for NestJS that allows dynamic query parsing for Prisma ORM.
+This library provides a powerful and configurable **PrismaQuery** decorator for NestJS that allows dynamic query parsing for REST endpoints using Prisma ORM.
 
 ## **📌 Features**
 
