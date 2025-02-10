@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/StickelInnovationUG/nestjs-prisma-query/compare/v1.0.1...v1.0.2) (2025-02-10)
+
+
+### Bug Fixes
+
+* wrong package name in readme ([#6](https://github.com/StickelInnovationUG/nestjs-prisma-query/issues/6)) ([3d5021c](https://github.com/StickelInnovationUG/nestjs-prisma-query/commit/3d5021c7c1196817a620a5b2c8f609095301b937))
+
 ## [1.0.1](https://github.com/StickelInnovationUG/nestjs-prisma-query/compare/v1.0.0...v1.0.1) (2025-02-10)
 
 
