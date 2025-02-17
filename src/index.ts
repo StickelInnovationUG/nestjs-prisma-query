@@ -3,6 +3,7 @@ export class PrismaQueryConfig {
   excludeKeys: string[] = [];
   requestFields: string[] = [];
   forbiddenKeys: string[] = [];
+  logErrors: boolean = false;
 
   constructor(config?: Partial<PrismaQueryConfig>) {
     Object.assign(this, config);
