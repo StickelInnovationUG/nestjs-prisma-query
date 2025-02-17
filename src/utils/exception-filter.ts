@@ -1,4 +1,3 @@
-// In your library (e.g., utils/exception-filter.ts)
 import {
   ArgumentsHost,
   BadRequestException,
@@ -7,16 +6,24 @@ import {
   Logger,
 } from '@nestjs/common';
 
+import PrismaQueryService from '../index';
+
 @Catch()
 export class PrismaQueryExceptionFilter implements ExceptionFilter {
   private readonly logger = new Logger(PrismaQueryExceptionFilter.name);
+  private readonly logErrors: boolean;
 
+  constructor() {
+    this.logErrors = PrismaQueryService.getConfig().logErrors;
+  }
   catch(exception: BadRequestException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
     const request = ctx.getRequest();
 
-    this.logger.error(exception);
+    if (this.logErrors) {
+      this.logger.error(exception);
+    }
 
     const responseBody = {
       statusCode: exception.getStatus(),

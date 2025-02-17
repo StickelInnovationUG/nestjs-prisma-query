@@ -55,7 +55,7 @@ export const paginate = async <
     };
   } catch (error) {
     throw new BadRequestException(
-      `Invalid query parameters', ${error.message}`,
+      `Invalid pagination parameters', ${error.message}`,
     );
   }
 };
