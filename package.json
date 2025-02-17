@@ -1,6 +1,6 @@
 {
   "name": "@stickelinnovation/nestjs-prisma-query",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A Nest.js decorator for Prisma query parsing.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

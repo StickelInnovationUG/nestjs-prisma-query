@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/StickelInnovationUG/nestjs-prisma-query/compare/v1.1.0...v1.2.0) (2025-02-17)
+
+
+### Features
+
+* add optional logging ([#10](https://github.com/StickelInnovationUG/nestjs-prisma-query/issues/10)) ([733700e](https://github.com/StickelInnovationUG/nestjs-prisma-query/commit/733700e791c79c4f65f58da38e40b00838a5b903))
+
 # [1.1.0](https://github.com/StickelInnovationUG/nestjs-prisma-query/compare/v1.0.4...v1.1.0) (2025-02-10)
 
 
