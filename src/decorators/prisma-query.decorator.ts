@@ -66,7 +66,7 @@ export const PrismaQuery = <TDto extends object>(config: {
     try {
       await validateOrReject(dtoInstance);
     } catch (error) {
-      throw new BadRequestException('Invalid query parameters', error.message);
+      throw new BadRequestException('Invalid query parameters', error?.message);
     }
 
     const prismaArgs: ParsedPrismaQuery = {};
