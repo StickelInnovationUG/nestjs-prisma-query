@@ -19,25 +19,25 @@ importers:
         specifier: ^19.7.1
         version: 19.7.1
       '@eslint/compat':
-        specifier: ^1.2.7
+        specifier: ^1.2.6
         version: 1.2.7(eslint@9.21.0(jiti@2.4.2))
       '@eslint/eslintrc':
-        specifier: ^3.3.0
+        specifier: ^3.2.0
         version: 3.3.0
       '@eslint/js':
-        specifier: ^9.21.0
+        specifier: ^9.20.0
         version: 9.21.0
       '@nestjs/common':
-        specifier: ^11.0.10
+        specifier: ^11.0.8
         version: 11.0.10(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1)
       '@nestjs/core':
-        specifier: ^11.0.10
+        specifier: ^11.0.8
         version: 11.0.10(@nestjs/common@11.0.10(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(reflect-metadata@0.2.2)(rxjs@7.8.1)
       '@nestjs/swagger':
-        specifier: ^11.0.5
+        specifier: ^11.0.3
         version: 11.0.5(@nestjs/common@11.0.10(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/core@11.0.10(@nestjs/common@11.0.10(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(reflect-metadata@0.2.2)(rxjs@7.8.1))(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)
       '@prisma/client':
-        specifier: ^6.4.1
+        specifier: ^6.3.1
         version: 6.4.1(typescript@5.7.3)
       '@semantic-release/changelog':
         specifier: ^6.0.3
@@ -49,16 +49,16 @@ importers:
         specifier: ^12.0.1
         version: 12.0.1(semantic-release@24.2.3(typescript@5.7.3))
       '@typescript-eslint/eslint-plugin':
-        specifier: ^8.25.0
+        specifier: ^8.23.0
         version: 8.25.0(@typescript-eslint/parser@8.25.0(eslint@9.21.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.21.0(jiti@2.4.2))(typescript@5.7.3)
       '@typescript-eslint/parser':
-        specifier: ^8.25.0
+        specifier: ^8.23.0
         version: 8.25.0(eslint@9.21.0(jiti@2.4.2))(typescript@5.7.3)
       commitlint:
         specifier: ^19.7.1
         version: 19.7.1(@types/node@22.13.1)(typescript@5.7.3)
       eslint:
-        specifier: ^9.21.0
+        specifier: ^9.20.0
         version: 9.21.0(jiti@2.4.2)
       eslint-config-prettier:
         specifier: ^10.0.1
@@ -79,8 +79,8 @@ importers:
         specifier: ^4.1.4
         version: 4.1.4(@typescript-eslint/eslint-plugin@8.25.0(@typescript-eslint/parser@8.25.0(eslint@9.21.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.21.0(jiti@2.4.2))(typescript@5.7.3))(eslint@9.21.0(jiti@2.4.2))
       globals:
-        specifier: ^16.0.0
-        version: 16.0.0
+        specifier: ^15.14.0
+        version: 15.15.0
       husky:
         specifier: ^9.1.7
         version: 9.1.7
@@ -88,13 +88,13 @@ importers:
         specifier: ^15.4.3
         version: 15.4.3
       prettier:
-        specifier: ^3.5.2
+        specifier: ^3.4.2
         version: 3.5.2
       rimraf:
         specifier: ^6.0.1
         version: 6.0.1
       semantic-release:
-        specifier: ^24.2.3
+        specifier: ^24.2.1
         version: 24.2.3(typescript@5.7.3)
       tsconfig-paths:
         specifier: ^4.2.0
@@ -1308,8 +1308,8 @@ packages:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
     engines: {node: '>=18'}
 
-  globals@16.0.0:
-    resolution: {integrity: sha512-iInW14XItCXET01CQFqudPOWP2jYMl7T+QRQT+UNcR/iQncN/F0UNpgd76iFkBPgNQb4+X3LV9tLJYzwh+Gl3A==}
+  globals@15.15.0:
+    resolution: {integrity: sha512-7ACyT3wmyp3I61S4fG682L0VA2RGD9otkqGJIwNUMF1SWUombIIk+af1unuDYgMm082aHYwD+mzJvv9Iu8dsgg==}
     engines: {node: '>=18'}
 
   globalthis@1.0.4:
@@ -4141,7 +4141,7 @@ snapshots:
 
   globals@14.0.0: {}
 
-  globals@16.0.0: {}
+  globals@15.15.0: {}
 
   globalthis@1.0.4:
     dependencies:
