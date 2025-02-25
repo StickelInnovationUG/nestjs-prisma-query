@@ -1,3 +1,12 @@
+# [1.3.0](https://github.com/StickelInnovationUG/nestjs-prisma-query/compare/v1.2.0...v1.3.0) (2025-02-25)
+
+
+### Features
+
+* update dependencies ([c88af33](https://github.com/StickelInnovationUG/nestjs-prisma-query/commit/c88af330ecf0959f96904664bac149c207b5f3e6))
+* update pnpm lock ([272abbf](https://github.com/StickelInnovationUG/nestjs-prisma-query/commit/272abbfd38af40a455d6521a1a34072aa0741d35))
+* update version ([fe181d7](https://github.com/StickelInnovationUG/nestjs-prisma-query/commit/fe181d7bf98f934edfc778b65c2b36d074ae3e4f))
+
 # [1.2.0](https://github.com/StickelInnovationUG/nestjs-prisma-query/compare/v1.1.0...v1.2.0) (2025-02-17)
 
 
