@@ -11,6 +11,8 @@ This library provides a powerful and configurable **PrismaQuery** decorator for 
 ✅ **Paginator for findMany requests**  
 ✅ **Generate OpenApi (Swagger) docs**
 
+**Example request:** `GET /endpoint?filter.category=electronics&filter.price$gte:100`
+
 ---
 
 ## **🚀 Installation**
