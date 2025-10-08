@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/StickelInnovationUG/nestjs-prisma-query/compare/v1.5.0...v1.6.0) (2025-10-08)
+
+
+### Features
+
+* add support for nested select and include ([#18](https://github.com/StickelInnovationUG/nestjs-prisma-query/issues/18)) ([1e369ae](https://github.com/StickelInnovationUG/nestjs-prisma-query/commit/1e369ae2cb34aa1d8aa96b87278b4ba8eca7ba25))
+
 # [1.5.0](https://github.com/StickelInnovationUG/nestjs-prisma-query/compare/v1.4.3...v1.5.0) (2025-07-27)
 
 
