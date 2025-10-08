@@ -301,6 +301,112 @@ async findAllVideoLikes(
 
 ---
 
+## **Usage with `PrismaQueryExecutorService`**
+
+The library includes a `PrismaQueryExecutorService` that simplifies paginated queries and aggregations. You can inject this service into your own services.
+
+First, you need to import `PrismaQueryExecutorModule` into your module.
+
+**`your.module.ts`**
+
+```ts
+import { Module } from '@nestjs/common';
+import { PrismaQueryExecutorModule } from '@stickelinnovation/nestjs-prisma-query';
+import { AnalyticsService } from './analytics.service';
+import { AnalyticsController } from './analytics.controller';
+
+@Module({
+  imports: [PrismaQueryExecutorModule],
+  providers: [AnalyticsService],
+  controllers: [AnalyticsController],
+})
+export class AnalyticsModule {}
+```
+
+**`analytics.service.ts`**
+
+```ts
+import { Injectable } from '@nestjs/common';
+import { Prisma } from '@prisma/client';
+import {
+  PrismaQueryExecutorService,
+  ParsedPrismaQuery,
+  PaginationResult,
+} from '@stickelinnovation/nestjs-prisma-query';
+import { VideoEntity } from './entities/video.entity';
+
+@Injectable()
+export class AnalyticsService {
+  constructor(
+    private readonly queryService: PrismaQueryExecutorService,
+    private readonly prisma: PrismaService, // Assuming you have PrismaService
+  ) {}
+
+  getVideosPaginated(
+    query: ParsedPrismaQuery,
+  ): Promise<PaginationResult<VideoEntity>> {
+    return this.queryService.findManyWithPagination<VideoEntity>(
+      this.prisma.video,
+      query,
+    );
+  }
+
+  getVideoAnalytics(query: ParsedPrismaQuery) {
+    return this.queryService.performAggregation(this.prisma.video, query);
+  }
+}
+```
+
+**`analytics.controller.ts`**
+
+```ts
+import { Controller, Get } from '@nestjs/common';
+import { ApiOkResponse, ApiOperation, ApiQuery } from '@nestjs/swagger';
+import {
+  PrismaQuery,
+  PaginationResultDto,
+  ParsedPrismaQuery,
+} from '@stickelinnovation/nestjs-prisma-query';
+import { VideoEntity } from './entities/video.entity';
+import { VideoQueryDto } from './dto/video-query.dto';
+import { videoFieldTypeMap } from './entities/video.entity';
+import { AnalyticsService } from './analytics.service';
+
+@Controller('analytics')
+export class AnalyticsController {
+  constructor(private readonly analyticsService: AnalyticsService) {}
+
+  @Get('videos')
+  @ApiOperation({ summary: 'Get all videos entries' })
+  @ApiOkResponse({ type: PaginationResultDto<VideoEntity>, isArray: false })
+  @ApiQuery({ type: VideoQueryDto })
+  getVideosPaginated(
+    @PrismaQuery({
+      fieldTypeMap: videoFieldTypeMap,
+      dto: VideoQueryDto,
+    })
+    query: ParsedPrismaQuery,
+  ) {
+    return this.analyticsService.getVideosPaginated(query);
+  }
+
+  @Get('videos/stats')
+  @ApiOperation({ summary: 'Get video analytics' })
+  @ApiQuery({ type: VideoQueryDto }) // You might want a different DTO for aggregations
+  getVideoAnalytics(
+    @PrismaQuery({
+      fieldTypeMap: videoFieldTypeMap,
+      dto: VideoQueryDto,
+    })
+    query: ParsedPrismaQuery,
+  ) {
+    return this.analyticsService.getVideoAnalytics(query);
+  }
+}
+```
+
+---
+
 ## **🎯 Config Options Use Cases**
 
 | Feature             | Use Case                                                           |
@@ -403,19 +509,46 @@ skip: 20
 
 ### **Relations (`include`, `select`)**
 
-You can include or select related models.
+You can include or select related models. Dot notation can be used to specify nested relations.
 
-#### **Example:**
+**Note:** `include` and `select` cannot be used at the same time in the same query.
+
+#### **Select Example:**
 
 ```sh
-GET /endpoint?include=category,genre&select=name
+GET /endpoint?select=name,user.name,user.email
 ```
 
 **Prisma equivalent:**
 
 ```ts
-include: { category: true, genre: true },
-select: { name: true }
+select: {
+  name: true,
+  user: {
+    select: {
+      name: true,
+      email: true,
+    },
+  },
+}
+```
+
+#### **Include Example:**
+
+```sh
+GET /endpoint?include=posts.comments
+```
+
+**Prisma equivalent:**
+
+```ts
+include: {
+  posts: {
+    include: {
+      comments: true,
+    },
+  },
+}
 ```
 
 ### **Distinct (`distinct`)**

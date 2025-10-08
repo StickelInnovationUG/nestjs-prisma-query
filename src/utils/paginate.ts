@@ -1,6 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 
-type PaginationResult<T> = {
+export type PaginationResult<T> = {
   data: T[];
   totalCount: number;
   currentPage: number;

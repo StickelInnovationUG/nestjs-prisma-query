@@ -12,10 +12,12 @@ import type {
   ParsedPrismaQuery,
 } from '../types/query.type';
 import {
+  parseComputations,
   parseFilterString,
   parseInclude,
   parseLogicalOperators,
   parseOrderBy,
+  parseSelect,
 } from '../utils/parsers';
 
 export const PrismaQuery = <TDto extends object>(config: {
@@ -91,8 +93,15 @@ export const PrismaQuery = <TDto extends object>(config: {
         );
       } else if (key === 'orderBy') {
         prismaArgs.orderBy = parseOrderBy(query[key]);
-      } else if (['include', 'select'].includes(key)) {
+      } else if (key === 'select') {
+        prismaArgs.select = parseSelect(query[key]);
+      } else if (key === 'include') {
         prismaArgs.include = parseInclude(query[key]);
+      } else if (key === 'groupBy') {
+        prismaArgs.by = query[key].split(',').map((s) => s.trim());
+      } else if (key === 'compute') {
+        const computations = parseComputations(query[key]);
+        Object.assign(prismaArgs, computations);
       } else if (sensitiveFields.includes(key)) {
         throw new BadRequestException(
           `Access to sensitive field ${key} is not allowed.`,
@@ -104,6 +113,12 @@ export const PrismaQuery = <TDto extends object>(config: {
           prismaArgs[key] = query[key];
         }
       }
+    }
+
+    if (prismaArgs.select && prismaArgs.include) {
+      throw new BadRequestException(
+        'The query parameters "select" and "include" cannot be used at the same time.',
+      );
     }
 
     // Add global request fields (e.g., userId, accountId) to `where` clause
