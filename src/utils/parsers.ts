@@ -30,29 +30,37 @@ export const generateFieldTypeMap = <T>(
   return fieldTypeMap;
 };
 
-export const parseOrderBy = (
-  orderString: string,
-): PrismaOrderByValue | PrismaOrderByValue[] => {
-  return orderString.split(',').map((sort) => {
-    const [field, direction] = sort.split(':');
-    return field.includes('.')
-      ? field
-          .split('.')
-          .reverse()
-          .reduce((acc, curr) => ({ [curr]: acc }), {} as Record<string, any>)
-      : { [field]: direction };
+export const parseOrderBy = (value: string): PrismaOrderByValue[] => {
+  const orderBy: PrismaOrderByValue[] = [];
+  const parts = value.split(',');
+
+  parts.forEach((part) => {
+    const [path, order] = part.trim().split(':');
+    if (!path || !order) return;
+
+    // Handle dot notation for nested sorting (e.g., _count.videoCrn)
+    const fields = path.split('.');
+
+    // Use reduceRight to build the nested object from the inside out
+    const nestedOrderBy = fields.reduceRight(
+      (acc, field) => ({ [field]: acc }),
+      order.toLowerCase() as PrismaOrderByValue,
+    );
+
+    orderBy.push(nestedOrderBy);
   });
+
+  return orderBy;
 };
 
-export const parseInclude = (
-  includeString: string,
-): Record<string, boolean> => {
-  return includeString
-    .split(',')
-    .reduce(
-      (acc, field) => ({ ...acc, [field.trim()]: true }),
-      {} as Record<string, boolean>,
-    );
+export const parseFields = (value: string): Record<string, boolean> => {
+  return value.split(',').reduce((acc, field) => {
+    const trimmedField = field.trim();
+    if (trimmedField) {
+      acc[trimmedField] = true;
+    }
+    return acc;
+  }, {});
 };
 
 export const getFieldType = (
@@ -84,17 +92,31 @@ export const parseFilterString = (
   filterString: string,
   fieldTypeMap: NestedFieldTypeMap,
 ) => {
-  const [operator, ...valueParts] = filterString.split(':');
+  let operator: string;
+  let value: string;
+
+  // 1. INTELLIGENTLY DETERMINE OPERATOR AND VALUE
+  if (filterString.startsWith('$') && filterString.includes(':')) {
+    // Case 1: An explicit operator is provided (e.g., "$gte:100")
+    const [op, ...valueParts] = filterString.split(':');
+    operator = op;
+    value = valueParts.join(':');
+  } else {
+    // Case 2: No operator is provided (e.g., "true" or "some-string").
+    // Default to '$eq' based on your operators.ts file.
+    operator = '$eq';
+    value = filterString;
+  }
+
   const prismaOperator = operatorMap[operator];
 
   if (!prismaOperator) {
     throw new BadRequestException(`Unknown operator: ${operator}`);
   }
 
-  const value = valueParts.join(':');
   const fieldType = getFieldType(field || '', fieldTypeMap);
   if (!fieldType) {
-    throw new BadRequestException(`Unsupported field type for field: ${field}`);
+    // Let Prisma handle validation for deeper fields.
   }
 
   if (prismaOperator === 'in' || prismaOperator === 'notIn') {
@@ -115,7 +137,13 @@ export const parseFilterString = (
     if (isNaN(parsedValue.getTime())) {
       throw new BadRequestException(`Invalid date value for field: ${field}`);
     }
+  } else if (value.toLowerCase() === 'true') {
+    // Handle booleans explicitly
+    parsedValue = true;
+  } else if (value.toLowerCase() === 'false') {
+    parsedValue = false;
   } else {
+    // Default to string
     parsedValue = value;
   }
 
@@ -141,4 +169,86 @@ export const parseLogicalOperators = (
   });
 
   return parsedConditions;
+};
+
+/**
+ * Parses the `compute` query parameter for aggregation operations.
+ * Example: `_count,_sum:progress`
+ * Becomes: { _count: { _all: true }, _sum: { progress: true } }
+ */
+const parseNested = (
+  value: string,
+  key: 'select' | 'include',
+): Record<string, any> => {
+  const result = {};
+  if (!value) {
+    return result;
+  }
+  const fields = value.split(',').map((f) => f.trim());
+
+  for (const field of fields) {
+    const parts = field.split('.');
+    let current = result;
+    for (let i = 0; i < parts.length; i++) {
+      const part = parts[i];
+      const isLast = i === parts.length - 1;
+
+      if (isLast) {
+        if (typeof current[part] !== 'object') {
+          current[part] = true;
+        }
+      } else {
+        if (typeof current[part] !== 'object' || current[part] === true) {
+          current[part] = {};
+        }
+        if (!current[part][key]) {
+          current[part][key] = {};
+        }
+        current = current[part][key];
+      }
+    }
+  }
+  return result;
+};
+
+export const parseSelect = (value: string): Record<string, any> => {
+  return parseNested(value, 'select');
+};
+
+export const parseInclude = (value: string): Record<string, any> => {
+  return parseNested(value, 'include');
+};
+
+export const parseComputations = (value: string): Record<string, any> => {
+  const allowedAggregations = ['_count', '_sum', '_avg', '_min', '_max'];
+  const computations = {};
+
+  const parts = value.split(',');
+
+  for (const part of parts) {
+    const trimmedPart = part.trim();
+    if (!trimmedPart) continue;
+
+    const [func, field] = trimmedPart.split(':');
+
+    if (!allowedAggregations.includes(func)) {
+      continue;
+    }
+
+    // Handle the special case of `_count` which can be general
+    if (func === '_count' && !field) {
+      computations['_count'] = { _all: true };
+      continue;
+    }
+
+    // Initialize the aggregation object if it doesn't exist
+    if (!computations[func]) {
+      computations[func] = {};
+    }
+
+    // Add the field to the aggregation
+    computations[func][field] = true;
+  }
+
+  return computations;
 };

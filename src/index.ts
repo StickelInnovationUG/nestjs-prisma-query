@@ -21,17 +21,17 @@ export class PrismaQueryService {
     return PrismaQueryService.config;
   }
 }
-
 export * from './decorators/prisma-query.decorator';
 export * from './dtos/paginated-result.dto';
 export * from './dtos/prisma-query.dto';
+export * from './prisma-query-executor.module';
+export * from './prisma-query-executor.service';
 export * from './types/query.type';
 export * from './utils/exception-filter';
 export * from './utils/operators';
 export * from './utils/paginate';
 export * from './utils/parsers';
 export * from './utils/swagger-properties';
-
 export default PrismaQueryService;
 
 export {
