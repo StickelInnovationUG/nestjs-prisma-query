@@ -31,8 +31,6 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile --no-verify-store-integrity
-        env:
-          PNPM_CONFIG_ONLY_BUILT_DEPENDENCIES: "@nestjs/core,@prisma/client,@scarf/scarf,unrs-resolver"
 
       - name: Run Semantic Release
         env:

@@ -105,5 +105,13 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@nestjs/core",
+      "@prisma/client",
+      "@scarf/scarf",
+      "unrs-resolver"
+    ]
   }
 }
