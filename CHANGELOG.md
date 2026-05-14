@@ -1,3 +1,17 @@
+# [1.7.0-beta.1](https://github.com/StickelInnovationUG/nestjs-prisma-query/compare/v1.6.0...v1.7.0-beta.1) (2026-05-14)
+
+
+### Bug Fixes
+
+* **ci:** allow built dependencies in pnpm 11 ([819eb61](https://github.com/StickelInnovationUG/nestjs-prisma-query/commit/819eb61fd178d94713f45e63410d6ddfe92eb8b7))
+* **ci:** restore pnpm-workspace.yaml for build approvals ([ab17933](https://github.com/StickelInnovationUG/nestjs-prisma-query/commit/ab17933f0c690c01fe582cab0c6934ee5d81ff7a))
+
+
+### Features
+
+* update dependencies and fix build ([#19](https://github.com/StickelInnovationUG/nestjs-prisma-query/issues/19)) ([c152adb](https://github.com/StickelInnovationUG/nestjs-prisma-query/commit/c152adbcd35482debd5747192c52b7c3675127b1))
+* update dependencies and fix build ([#20](https://github.com/StickelInnovationUG/nestjs-prisma-query/issues/20)) ([af3d615](https://github.com/StickelInnovationUG/nestjs-prisma-query/commit/af3d615529716f209bc36eb27f875198506f2634))
+
 # [1.6.0](https://github.com/StickelInnovationUG/nestjs-prisma-query/compare/v1.5.0...v1.6.0) (2025-10-08)
 
 
