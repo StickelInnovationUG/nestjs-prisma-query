@@ -19,6 +19,7 @@ type PrismaCountAggregation = { _all?: boolean } & PrismaAggregationField;
  * Prisma `find` operations and `groupBy` aggregation operations.
  */
 export type ParsedPrismaQuery = {
+  [key: string]: any;
   // Standard find properties
   select?: Record<string, any>;
   include?: Record<string, any>;
