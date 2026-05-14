@@ -20,14 +20,14 @@ export const applySwaggerProperties = (
         description: `Filter by ${fullKey}`,
         type: propertyType,
         examples: operatorExamples,
-      })(target.prototype, `filter.${fullKey}`);
+      })((target as { prototype: any }).prototype, `filter.${fullKey}`);
     }
   }
 };
 
 export const getPropertyType = (type: any): any => {
   if (typeof type === 'object') {
-    return () => type;
+    return () => type as object;
   }
   return type;
 };

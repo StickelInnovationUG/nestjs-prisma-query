@@ -25,7 +25,10 @@ export class PrismaQueryExecutorService {
       );
     }
     const findManyArgs = query as FindManyArgs<any>;
-    return paginate<any, TResult>(model, findManyArgs);
+    return paginate<any, TResult>(
+      model,
+      findManyArgs as { take?: number; skip?: number },
+    );
   }
 
   /**
@@ -74,13 +77,13 @@ export class PrismaQueryExecutorService {
       const orderByArray = Array.isArray(orderBy) ? orderBy : [orderBy];
       for (const orderItem of orderByArray) {
         const aggKey = Object.keys(orderItem)[0];
-        if (aggregations[aggKey]) {
-          const innerObject = orderItem[aggKey];
+        if ((aggregations as any)[aggKey]) {
+          const innerObject = (orderItem as any)[aggKey] as Record<string, any>;
           const fieldKey = Object.keys(innerObject)[0];
-          if (aggregations[aggKey]._all) {
-            delete aggregations[aggKey]._all;
+          if ((aggregations as any)[aggKey]._all) {
+            delete (aggregations as any)[aggKey]._all;
           }
-          aggregations[aggKey][fieldKey] = true;
+          (aggregations as any)[aggKey][fieldKey] = true;
         }
       }
     }
