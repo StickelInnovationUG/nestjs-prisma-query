@@ -1,3 +1,11 @@
+# [1.7.0](https://github.com/StickelInnovationUG/nestjs-prisma-query/compare/v1.6.0...v1.7.0) (2026-09-12)
+
+
+### Features
+
+* promote 1.7.0-beta to stable ([#21](https://github.com/StickelInnovationUG/nestjs-prisma-query/issues/21)) ([307cf61](https://github.com/StickelInnovationUG/nestjs-prisma-query/commit/307cf6143537907169f7970f266ae73860c166a6)), closes [#19](https://github.com/StickelInnovationUG/nestjs-prisma-query/issues/19) [#20](https://github.com/StickelInnovationUG/nestjs-prisma-query/issues/20)
+* release new version ([28c2fb5](https://github.com/StickelInnovationUG/nestjs-prisma-query/commit/28c2fb5d70123ca6a94c14ee2c7f5ece672d668f))
+
 # [1.7.0-beta.1](https://github.com/StickelInnovationUG/nestjs-prisma-query/compare/v1.6.0...v1.7.0-beta.1) (2026-05-14)
 
 
