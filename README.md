@@ -571,6 +571,6 @@ distinct: ['name'];
 
 ## **🐟 License**
 
-MIT License © 2025 - Stickel Innovation UG (Jonas Stickel)
+MIT License © 2026 - Stickel Innovation UG (Jonas Stickel)
 
 ---
