@@ -78,7 +78,7 @@ export class PrismaQueryDto<T> {
   })
   @IsOptional()
   @IsInt()
-  @Transform(({ value }) => parseInt(value, 0))
+  @Transform(({ value }) => parseInt(value as string, 10))
   take?: number;
 
   @ApiPropertyOptional({
@@ -87,7 +87,7 @@ export class PrismaQueryDto<T> {
   })
   @IsOptional()
   @IsInt()
-  @Transform(({ value }) => parseInt(value, 0))
+  @Transform(({ value }) => parseInt(value as string, 10))
   skip?: number;
 
   @ApiPropertyOptional({

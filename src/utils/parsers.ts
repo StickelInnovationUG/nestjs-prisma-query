@@ -3,14 +3,14 @@ import { BadRequestException } from '@nestjs/common';
 import { NestedFieldTypeMap, PrismaOrderByValue } from '../types/query.type';
 import { operatorMap } from '../utils/operators';
 
-export const generateFieldTypeMap = <T>(
+export const generateFieldTypeMap = <T extends object>(
   model: new () => T,
 ): NestedFieldTypeMap => {
   const instance = new model();
   const fieldTypeMap: NestedFieldTypeMap = {};
 
   for (const key of Object.keys(instance)) {
-    const value = instance[key];
+    const value = (instance as any)[key];
     const fieldType = typeof value;
 
     if (fieldType === 'number') {
@@ -54,7 +54,7 @@ export const parseOrderBy = (value: string): PrismaOrderByValue[] => {
 };
 
 export const parseFields = (value: string): Record<string, boolean> => {
-  return value.split(',').reduce((acc, field) => {
+  return value.split(',').reduce((acc: Record<string, boolean>, field) => {
     const trimmedField = field.trim();
     if (trimmedField) {
       acc[trimmedField] = true;
@@ -67,14 +67,14 @@ export const getFieldType = (
   field: string,
   fieldTypeMap: NestedFieldTypeMap,
 ) => {
-  return field.split('.').reduce((currentMap, part) => {
+  return field.split('.').reduce((currentMap: any, part) => {
     return typeof currentMap === 'object' && currentMap
       ? currentMap[part]
       : undefined;
-  }, fieldTypeMap);
+  }, fieldTypeMap as any);
 };
 
-const parseNestedFieldString = (field: string, value: any) => {
+const parseNestedFieldString = (field: string, value: any): any => {
   const fieldParts = field.split('.');
 
   if (fieldParts.length === 1) {
@@ -108,7 +108,7 @@ export const parseFilterString = (
     value = filterString;
   }
 
-  const prismaOperator = operatorMap[operator];
+  const prismaOperator = (operatorMap as any)[operator];
 
   if (!prismaOperator) {
     throw new BadRequestException(`Unknown operator: ${operator}`);
@@ -128,15 +128,17 @@ export const parseFilterString = (
 
   let parsedValue: any;
   if (fieldType === 'number') {
-    parsedValue = Number(value);
-    if (isNaN(parsedValue)) {
+    const numValue = Number(value);
+    if (isNaN(numValue)) {
       throw new BadRequestException(`Invalid number value for field: ${field}`);
     }
+    parsedValue = numValue;
   } else if (fieldType === 'date') {
-    parsedValue = new Date(value);
-    if (isNaN(parsedValue.getTime())) {
+    const dateValue = new Date(value);
+    if (isNaN(dateValue.getTime())) {
       throw new BadRequestException(`Invalid date value for field: ${field}`);
     }
+    parsedValue = dateValue;
   } else if (value.toLowerCase() === 'true') {
     // Handle booleans explicitly
     parsedValue = true;
@@ -180,7 +182,7 @@ const parseNested = (
   value: string,
   key: 'select' | 'include',
 ): Record<string, any> => {
-  const result = {};
+  const result: Record<string, any> = {};
   if (!value) {
     return result;
   }
@@ -188,7 +190,7 @@ const parseNested = (
 
   for (const field of fields) {
     const parts = field.split('.');
-    let current = result;
+    let current: any = result;
     for (let i = 0; i < parts.length; i++) {
       const part = parts[i];
       const isLast = i === parts.length - 1;
@@ -221,7 +223,7 @@ export const parseInclude = (value: string): Record<string, any> => {
 
 export const parseComputations = (value: string): Record<string, any> => {
   const allowedAggregations = ['_count', '_sum', '_avg', '_min', '_max'];
-  const computations = {};
+  const computations: Record<string, any> = {};
 
   const parts = value.split(',');
 
